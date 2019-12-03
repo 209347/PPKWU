@@ -1,0 +1,24 @@
+URL: /api/reverse/{message}
+
+Funkcjonalnosc: Po przekazaniu ciagu znakow zwroci go w odwrotnej kolejnosci
+Rodzaj metody: GET
+Parametr: wiadomosc ktora chcemy odwrocic
+Odpowiedz:
+    Kod: 200
+    Content: odwrocona wiadomosc
+Błąd podczas odpowiedzi:
+    Kod: 404
+
+
+
+
+URL:/api/checkString/{message}
+
+Funkcjonalnosc: Sprawdzenie wystepowanie duzych i malych liter, liczb, znakow specjalnych i dowolnej ich kombinacji
+Rodzaj metody: GET
+Parametr: wiadomosc ktora chcemy sprawdzic
+Odpowiedz:
+    Kod: 200
+    Content: Mapa zawierajaca listy wystepujacych duzych i malych liter, liczb, znakow specjalnych
+Błąd podczas odpowiedzi:
+    Kod: 404
