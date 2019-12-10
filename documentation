@@ -22,3 +22,25 @@ Odpowiedz:
     Content: Mapa zawierajaca listy wystepujacych duzych i malych liter, liczb, znakow specjalnych
 Błąd podczas odpowiedzi:
     Kod: 404
+
+
+URL: /api/getCurrentMonth
+
+Funkcjonalnosc: generowanie obecnego miesiaca w kalendarzu w formacie ICS/iCal na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
+Rodzaj metody: GET
+Odpowiedź:
+    Kod: 200
+    Content: plik w postaci ICS/iCal
+Błąd podczas odpowiedzi:
+    Kod: 404
+
+URL: /api/getCalendarMonth/{month}
+
+Funkcjonalnosc: generowanie konkretnego miesiaca w kalendarzu w formacie ICS/iCal na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
+Rodzaj metody: GET
+Parametr: cyfra okreslajaca numer miesiaca
+Sukcesywna odpowiedź:
+    Kod: 200
+    Content: plik w postaci ICS/iCal
+Błąd podczas odpowiedzi:
+    Kod: 404
