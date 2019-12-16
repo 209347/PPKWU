@@ -26,21 +26,21 @@ Błąd podczas odpowiedzi:
 
 URL: /api/getCurrentMonth
 
-Funkcjonalnosc: generowanie obecnego miesiaca w kalendarzu w formacie ICS/iCal na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
+Funkcjonalnosc: generowanie obecnego miesiaca w kalendarzu w formacie ics na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
 Rodzaj metody: GET
 Odpowiedź:
     Kod: 200
-    Content: plik w postaci ICS/iCal
+    Content: plik w formacie ics
 Błąd podczas odpowiedzi:
     Kod: 404
 
 URL: /api/getCalendarMonth/{month}
 
-Funkcjonalnosc: generowanie konkretnego miesiaca w kalendarzu w formacie ICS/iCal na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
+Funkcjonalnosc: generowanie konkretnego miesiaca w kalendarzu w formacie ics na podstawie kalendarza ze strony http://www.weeia.p.lodz.pl
 Rodzaj metody: GET
 Parametr: cyfra okreslajaca numer miesiaca
-Sukcesywna odpowiedź:
+Odpowiedź:
     Kod: 200
-    Content: plik w postaci ICS/iCal
+    Content: plik w formacie ics
 Błąd podczas odpowiedzi:
     Kod: 404
