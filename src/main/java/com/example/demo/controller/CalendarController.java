@@ -28,29 +28,12 @@ public class CalendarController {
         LocalDate localDate = LocalDate.now();
         String year = String.valueOf(localDate.getYear());
         String month = String.valueOf(localDate.getMonthValue());
-        Document document = Jsoup.connect("http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=" + year + "&miesiac=" + month + "&lang=1").get();
-        Elements eventElements = document.select("a.active");
-        Elements eventNameElements = document.select("div.InnerBox");
 
         ArrayList<String> eventDates = new ArrayList<>();
-        for (Element e : eventElements) {
-            if (e.text().length() == 1) {
-                eventDates.add("0" + e.text());
-            } else {
-                eventDates.add(e.text());
-            }
-        }
-
         ArrayList<String> eventNames = new ArrayList<>();
-        for (Element e : eventNameElements) {
-            eventNames.add(e.text());
-        }
+        getDataFromElements(year, month, eventDates, eventNames);
 
-        ICal.write(eventDates, month, eventNames);
-        File file = new File("month" + month + ".ics");
-        Resource fileSystemResource = new FileSystemResource(file);
-
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(fileSystemResource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(createIcsFile(month, eventDates, eventNames));
 
     }
 
@@ -61,11 +44,19 @@ public class CalendarController {
         Integer monthInt =  monthValue == 0 ? 12 : monthValue;
         String year = String.valueOf(localDate.getYear() + years);
         String dateMonth = monthInt < 10 ? "0" + monthInt : String.valueOf(monthInt);
-        Document document = Jsoup.connect("http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=" + year + "&miesiac=" + dateMonth + "&lang=1").get();
+
+        ArrayList<String> eventDates = new ArrayList<>();
+        ArrayList<String> eventNames = new ArrayList<>();
+        getDataFromElements(year, dateMonth, eventDates, eventNames);
+
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(createIcsFile(dateMonth, eventDates, eventNames));
+    }
+
+    private void getDataFromElements(String year, String month, ArrayList<String> eventDates, ArrayList<String> eventNames) throws IOException {
+        Document document = Jsoup.connect("http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=" + year + "&miesiac=" + month + "&lang=1").get();
         Elements eventElements = document.select("a.active");
         Elements eventNameElements = document.select("div.InnerBox");
 
-        ArrayList<String> eventDates = new ArrayList<>();
         for (Element e : eventElements) {
             if (e.text().length() == 1) {
                 eventDates.add("0" + e.text());
@@ -73,17 +64,15 @@ public class CalendarController {
                 eventDates.add(e.text());
             }
         }
-
-        ArrayList<String> eventNames = new ArrayList<>();
         for (Element e : eventNameElements) {
             eventNames.add(e.text());
         }
+    }
 
-        ICal.write(eventDates, dateMonth, eventNames);
-        File file = new File("month" + dateMonth + ".ics");
-        Resource fileSystemResource = new FileSystemResource(file);
-
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(fileSystemResource);
+    private Resource createIcsFile(String month, ArrayList<String> eventDates, ArrayList<String> eventNames) {
+        ICal.write(eventDates, month, eventNames);
+        File file = new File("month" + month + ".ics");
+        return new FileSystemResource(file);
     }
 
 }
