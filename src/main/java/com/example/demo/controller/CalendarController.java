@@ -53,9 +53,37 @@ public class CalendarController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(fileSystemResource);
 
     }
-//
-//    @GetMapping("/api/getCalendarMonth/{month}") @ResponseStatus(HttpStatus.OK) public ResponseEntity<String> getCurrentMonth(@PathVariable String month) {
-//        return new ResponseEntity<String>;
-//    }
+
+    @GetMapping("/api/getCalendarMonth/{month}") @ResponseStatus(HttpStatus.OK) public ResponseEntity<Resource> getCurrentMonth(@PathVariable String month) throws IOException {
+        LocalDate localDate = LocalDate.now();
+        Integer years = Integer.parseInt(month) / 12;
+        Integer monthValue = Integer.parseInt(month) % 12;
+        Integer monthInt =  monthValue == 0 ? 12 : monthValue;
+        String year = String.valueOf(localDate.getYear() + years);
+        String dateMonth = monthInt < 10 ? "0" + monthInt : String.valueOf(monthInt);
+        Document document = Jsoup.connect("http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=" + year + "&miesiac=" + dateMonth + "&lang=1").get();
+        Elements eventElements = document.select("a.active");
+        Elements eventNameElements = document.select("div.InnerBox");
+
+        ArrayList<String> eventDates = new ArrayList<>();
+        for (Element e : eventElements) {
+            if (e.text().length() == 1) {
+                eventDates.add("0" + e.text());
+            } else {
+                eventDates.add(e.text());
+            }
+        }
+
+        ArrayList<String> eventNames = new ArrayList<>();
+        for (Element e : eventNameElements) {
+            eventNames.add(e.text());
+        }
+
+        ICal.write(eventDates, dateMonth, eventNames);
+        File file = new File("month" + dateMonth + ".ics");
+        Resource fileSystemResource = new FileSystemResource(file);
+
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(fileSystemResource);
+    }
 
 }
