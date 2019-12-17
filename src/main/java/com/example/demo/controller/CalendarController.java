@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,6 +22,12 @@ import java.util.ArrayList;
 
 @RestController
 public class CalendarController {
+
+    private static final String CALENDAR_TYPE = "text/calendar";
+    private static final String FIME_NAME = "month";
+    private static final String FILE_TYPE = ".ics";
+    private static final String EVENT_ELEMENT_CLASS = "a.active";
+    private static final String EVENT_NAME_CLASS = "div.InnerBox";
 
     @GetMapping("/api/getCurrentMonth") @ResponseStatus(HttpStatus.OK) public ResponseEntity<Resource> getCurrentMonth() throws IOException {
         LocalDate localDate = LocalDate.now();
@@ -33,7 +38,7 @@ public class CalendarController {
         ArrayList<String> eventNames = new ArrayList<>();
         getDataFromElements(year, month, eventDates, eventNames);
 
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(createIcsFile(month, eventDates, eventNames));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(CALENDAR_TYPE)).body(createIcsFile(month, eventDates, eventNames));
 
     }
 
@@ -49,13 +54,13 @@ public class CalendarController {
         ArrayList<String> eventNames = new ArrayList<>();
         getDataFromElements(year, dateMonth, eventDates, eventNames);
 
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/calendar")).body(createIcsFile(dateMonth, eventDates, eventNames));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(CALENDAR_TYPE)).body(createIcsFile(dateMonth, eventDates, eventNames));
     }
 
     private void getDataFromElements(String year, String month, ArrayList<String> eventDates, ArrayList<String> eventNames) throws IOException {
         Document document = Jsoup.connect("http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=" + year + "&miesiac=" + month + "&lang=1").get();
-        Elements eventElements = document.select("a.active");
-        Elements eventNameElements = document.select("div.InnerBox");
+        Elements eventElements = document.select(EVENT_ELEMENT_CLASS);
+        Elements eventNameElements = document.select(EVENT_NAME_CLASS);
 
         for (Element e : eventElements) {
             if (e.text().length() == 1) {
@@ -71,7 +76,7 @@ public class CalendarController {
 
     private Resource createIcsFile(String month, ArrayList<String> eventDates, ArrayList<String> eventNames) {
         ICal.write(eventDates, month, eventNames);
-        File file = new File("month" + month + ".ics");
+        File file = new File(FIME_NAME + month + FILE_TYPE);
         return new FileSystemResource(file);
     }
 

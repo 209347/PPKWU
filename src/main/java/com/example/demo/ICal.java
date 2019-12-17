@@ -20,12 +20,14 @@ public class ICal {
     private static final String EVENT_END = "END:VEVENT\r\n";
     private static final String CALENDAR_END = "END:VCALENDAR\r\n";
     private static final String BREAKLINE = "\r\n";
+    private static final String FILE_NAME = "month";
+    private static final String FILE_TYPE = ".ics";
 
     public static void write(List<String> eventDates, String month, List<String> eventName) {
         StringBuilder builder = new StringBuilder();
-        builder.append("month");
+        builder.append(FILE_NAME);
         builder.append(month);
-        builder.append(".ics");
+        builder.append(FILE_TYPE);
 
         try {
             File file = new File(builder.toString());
