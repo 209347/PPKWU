@@ -8,20 +8,20 @@ import java.util.List;
 
 public class ICal {
 
-    private String CALENDAR_BEGIN = "BEGIN:VCALENDAR\r\n";
-    private String VERSION = "VERSION:2.0\r\n";
-    private String PRODID = "PRODID:-//Ben Fortuna//iCal4j 1.0//EN\r\n";
-    private String CALSCALE = "CALSCALE:GREGORIAN\r\n";
-    private String METHOD = "METHOD:PUBLISH\r\n";
-    private String EVENT_BEGIN = "BEGIN:VEVENT\r\n";
-    private String START_DATE = "DTSTART:2019";
-    private String END_DATE = "DTEND:2019";
-    private String SUMMARY = "SUMMARY:";
-    private String EVENT_END = "END:VEVENT\r\n";
-    private String CALENDAR_END = "END:VCALENDAR\r\n";
-    private String BREAKLINE = "\r\n";
+    private static final String CALENDAR_BEGIN = "BEGIN:VCALENDAR\r\n";
+    private static final String VERSION = "VERSION:2.0\r\n";
+    private static final String PRODID = "PRODID:-//Ben Fortuna//iCal4j 1.0//EN\r\n";
+    private static final String CALSCALE = "CALSCALE:GREGORIAN\r\n";
+    private static final String METHOD = "METHOD:PUBLISH\r\n";
+    private static final String EVENT_BEGIN = "BEGIN:VEVENT\r\n";
+    private static final String START_DATE = "DTSTART:2019";
+    private static final String END_DATE = "DTEND:2019";
+    private static final String SUMMARY = "SUMMARY:";
+    private static final String EVENT_END = "END:VEVENT\r\n";
+    private static final String CALENDAR_END = "END:VCALENDAR\r\n";
+    private static final String BREAKLINE = "\r\n";
 
-    public void write(List<String> eventDates, String month, List<String> eventName) {
+    public static void write(List<String> eventDates, String month, List<String> eventName) {
         StringBuilder builder = new StringBuilder();
         builder.append("month");
         builder.append(month);
