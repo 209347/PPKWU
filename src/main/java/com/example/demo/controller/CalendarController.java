@@ -42,19 +42,14 @@ public class CalendarController {
 
     }
 
-    @GetMapping("/api/getCalendarMonth/{month}") @ResponseStatus(HttpStatus.OK) public ResponseEntity<Resource> getCurrentMonth(@PathVariable String month) throws IOException {
+    @GetMapping("/api/getSpecialMonth/{year}/{month}") @ResponseStatus(HttpStatus.OK) public ResponseEntity<Resource> getSpecialMonth(@PathVariable String year, @PathVariable String month) throws IOException {
         LocalDate localDate = LocalDate.now();
-        Integer years = Integer.parseInt(month) / 12;
-        Integer monthValue = Integer.parseInt(month) % 12;
-        Integer monthInt =  monthValue == 0 ? 12 : monthValue;
-        String year = String.valueOf(localDate.getYear() + years);
-        String dateMonth = monthInt < 10 ? "0" + monthInt : String.valueOf(monthInt);
 
         ArrayList<String> eventDates = new ArrayList<>();
         ArrayList<String> eventNames = new ArrayList<>();
-        getDataFromElements(year, dateMonth, eventDates, eventNames);
+        getDataFromElements(year, month, eventDates, eventNames);
 
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(CALENDAR_TYPE)).body(createIcsFile(dateMonth, eventDates, eventNames));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(CALENDAR_TYPE)).body(createIcsFile(month, eventDates, eventNames));
     }
 
     private void getDataFromElements(String year, String month, ArrayList<String> eventDates, ArrayList<String> eventNames) throws IOException {
