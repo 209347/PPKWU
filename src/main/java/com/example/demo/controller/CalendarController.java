@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.ICal;
+import com.example.demo.model.ICal;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
