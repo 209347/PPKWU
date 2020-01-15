@@ -46,3 +46,10 @@ Odpowiedź:
     Content: plik w formacie ics
 Błąd podczas odpowiedzi:
     Kod: 404
+
+
+Mobilny vCard PŁ
+
+Aby otworzyc aplikacje, nalezy uruchomic projekt, a nastepnie wpisac w przegladarke adres http://localhost:8080/
+Po wpisaniu szukanej frazy nalezy kliknac w przycisk szukaj, ktory przeniesie nas do strony wynikow wyszukiwania
+Na stronie wynikow wyszukiwania, po klinknieciu w przycisk "Generuj vCard" przy wybranym uzytkowniku, zostanie pobrany plik .vcf dla tego uzytkownika
