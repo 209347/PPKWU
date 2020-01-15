@@ -24,14 +24,18 @@
                         <th scope="col">Imie</th>
                         <th scope="col">Nazwisko</th>
                         <th scope="col">Miejsce pracy</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:each="users : ${users}">
-                    <td th:text="${users.getTitle()}"></td>
-                    <td th:text="${users.getName()}"></td>
-                    <td th:text="${users.getSurname()}"></td>
-                    <td th:text="${users.getWorkPlace()}"></td>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.getTitle()}"></td>
+                    <td th:text="${user.getName()}"></td>
+                    <td th:text="${user.getSurname()}"></td>
+                    <td th:text="${user.getWorkPlace()}"></td>
+                    <td>
+                        <a class="btn btn-secondary" th:href="@{'/api/generatevCard/' + ${user.toString()}}">Generuj vCard</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

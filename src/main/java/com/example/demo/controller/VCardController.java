@@ -2,17 +2,27 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SearchModel;
 import com.example.demo.model.UserModel;
+import com.google.gson.Gson;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+import ezvcard.VCardVersion;
+import ezvcard.property.Revision;
+import ezvcard.property.StructuredName;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 public class VCardController {
@@ -53,6 +63,41 @@ public class VCardController {
             users.add(u);
         }
         return users;
+    }
+
+    @RequestMapping(value = "/api/generatevCard/{user}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Resource> generatevCard(@PathVariable String user) throws IOException {
+        Gson gson = new Gson();
+        UserModel userModel =  gson.fromJson(user, UserModel.class);
+        VCard vcard = getVCard(userModel);
+
+        File vcardFile = new File("vcard.vcf");
+        Ezvcard.write(vcard).version(VCardVersion.V4_0).go(vcardFile);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vcard.vcf");
+        Resource fileSystemResource = new FileSystemResource("vcard.vcf");
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(fileSystemResource);
+    }
+
+    public VCard getVCard(UserModel user) throws IOException {
+        VCard vcard = new VCard();
+        StructuredName structuredName = new StructuredName();
+        structuredName.setFamily(user.getSurname());
+        structuredName.setGiven(user.getName());
+        if (user.getTitle() != null) {
+            vcard.addTitle(user.getTitle());
+        }
+        if (user.getWorkPlace() != null) {
+            vcard.setOrganization(user.getWorkPlace());
+        }
+        vcard.setFormattedName(user.getName() + " " + user.getSurname());
+        vcard.setRevision(Revision.now());
+
+        return vcard;
     }
 
 }

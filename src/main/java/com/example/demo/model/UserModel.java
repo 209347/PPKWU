@@ -6,8 +6,6 @@ public class UserModel {
 
     private String surname;
 
-    private String place;
-
     private String title;
 
     private String workPlace;
@@ -28,14 +26,6 @@ public class UserModel {
         this.surname = surname;
     }
 
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -50,5 +40,10 @@ public class UserModel {
 
     public void setWorkPlace(String workPlace) {
         this.workPlace = workPlace;
+    }
+
+    @Override
+    public String toString() {
+        return "{ \"name\": \"" + name + "\", \"surname\": \"" + surname + "\", \"title\": \"" + title + "\", \"workplace\": \"" + workPlace + "\" }";
     }
 }
