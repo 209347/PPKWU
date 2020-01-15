@@ -10,6 +10,8 @@ public class UserModel {
 
     private String title;
 
+    private String workPlace;
+
     public String getName() {
         return name;
     }
@@ -40,5 +42,13 @@ public class UserModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
     }
 }

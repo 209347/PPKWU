@@ -9,24 +9,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body style="margin-top: 5em;">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm text-center">
-                <h1>Wyszukaj pracowników</h1>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <form class="col-sm-12" action="#" th:action="@{/getvCards}" th:object="${searchModel}" method="get">
-                    <div class="input-group mb-3">
-                        <input type="text" th:field="*{phrase}" class="form-control" placeholder="Imie / Nazwisko" aria-label="username" aria-describedby="button-search">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="submit" id="button-search">Szukaj</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm text-center">
+            <h1>Wyniki wyszukiwania:</h1>
         </div>
     </div>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Tytul</th>
+                        <th scope="col">Imie</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Miejsce pracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="users : ${users}">
+                    <td th:text="${users.getTitle()}"></td>
+                    <td th:text="${users.getName()}"></td>
+                    <td th:text="${users.getSurname()}"></td>
+                    <td th:text="${users.getWorkPlace()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
