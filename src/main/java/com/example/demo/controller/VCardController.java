@@ -59,7 +59,7 @@ public class VCardController {
             u.setName(names.get(i).text().split(" ")[0]);
             u.setSurname(names.get(i).text().split(" ")[1]);
             u.setTitle(titles.get(i).text());
-            u.setWorkPlace(workPlaces.get(i).text());
+            u.setWorkplace(workPlaces.get(i).text());
             users.add(u);
         }
         return users;
@@ -91,8 +91,8 @@ public class VCardController {
         if (user.getTitle() != null) {
             vcard.addTitle(user.getTitle());
         }
-        if (user.getWorkPlace() != null) {
-            vcard.setOrganization(user.getWorkPlace());
+        if (user.getWorkplace() != null) {
+            vcard.setOrganization(user.getWorkplace());
         }
         vcard.setFormattedName(user.getName() + " " + user.getSurname());
         vcard.setRevision(Revision.now());

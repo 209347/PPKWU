@@ -8,7 +8,7 @@ public class UserModel {
 
     private String title;
 
-    private String workPlace;
+    private String workplace;
 
     public String getName() {
         return name;
@@ -34,16 +34,16 @@ public class UserModel {
         this.title = title;
     }
 
-    public String getWorkPlace() {
-        return workPlace;
+    public String getWorkplace() {
+        return workplace;
     }
 
-    public void setWorkPlace(String workPlace) {
-        this.workPlace = workPlace;
+    public void setWorkplace(String workplace) {
+        this.workplace = workplace;
     }
 
     @Override
     public String toString() {
-        return "{ \"name\": \"" + name + "\", \"surname\": \"" + surname + "\", \"title\": \"" + title + "\", \"workplace\": \"" + workPlace + "\" }";
+        return "{ \"name\": \"" + name + "\", \"surname\": \"" + surname + "\", \"title\": \"" + title + "\", \"workplace\": \"" + workplace + "\" }";
     }
 }
